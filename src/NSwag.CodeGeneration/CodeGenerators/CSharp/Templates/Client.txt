@@ -111,10 +111,10 @@ public partial class <class> <if(hasBaseType)>: <endif><if(hasBaseClass)><baseCl
 <endif>
 
         var responseData = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false); 
-        var status = ((int)response.StatusCode).ToString();
+        var status__ = ((int)response.StatusCode).ToString();
 
 <operation.Responses:{response | 
-        if (status == "<response.StatusCode>") 
+        if (status__ == "<response.StatusCode>") 
         {
 <if(response.HasType)>
     <if(response.IsFile)>
@@ -158,7 +158,7 @@ public partial class <class> <if(hasBaseType)>: <endif><if(hasBaseClass)><baseCl
                     result = JsonConvert.DeserializeObject\<<operation.DefaultResponse.Type>>(Encoding.UTF8.GetString(responseData));
 
 <if(operation.HasOnlyDefaultResponse)>
-                if (status.Length == 3 && status.StartsWith("2"))
+                if (status__.Length == 3 && status__.StartsWith("2"))
                     return result;
 <endif>
             \} 
