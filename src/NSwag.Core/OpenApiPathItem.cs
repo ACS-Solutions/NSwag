@@ -11,13 +11,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Newtonsoft.Json;
+using NJsonSchema;
+using NJsonSchema.References;
 using NSwag.Collections;
 
 namespace NSwag
 {
     /// <summary>A Swagger path, the key is usually a value of <see cref="OpenApiOperationMethod"/>.</summary>
     [JsonConverter(typeof(OpenApiPathItemConverter))]
-    public class OpenApiPathItem : ObservableDictionary<string, OpenApiOperation>
+    public class OpenApiPathItem : ObservableDictionary<string, OpenApiOperation>, IJsonReferenceBase, IJsonReference
     {
         /// <summary>Initializes a new instance of the <see cref="OpenApiPathItem"/> class.</summary>
         public OpenApiPathItem()
@@ -35,6 +37,10 @@ namespace NSwag
         [JsonIgnore]
         public OpenApiDocument Parent { get; internal set; }
 
+        /// <summary>Gets the actual response, either this or the referenced response.</summary>
+        [JsonIgnore]
+        public OpenApiPathItem ActualPathItem => Reference ?? this;
+
         /// <summary>Gets or sets the summary (OpenApi only).</summary>
         [JsonProperty(PropertyName = "summary", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string Summary { get; set; }
@@ -50,6 +56,49 @@ namespace NSwag
         /// <summary>Gets or sets the parameters.</summary>
         [JsonProperty(PropertyName = "parameters", DefaultValueHandling = DefaultValueHandling.Ignore)]
         public ICollection<OpenApiParameter> Parameters { get; set; } = new Collection<OpenApiParameter>();
+
+        #region Implementation of IJsonReferenceBase and IJsonReference
+
+        private OpenApiPathItem _reference;
+
+        /// <summary>Gets the document path (URI or file path) for resolving relative references.</summary>
+        [JsonIgnore]
+        public string DocumentPath { get; set; }
+
+        /// <summary>Gets or sets the type reference path ($ref). </summary>
+        [JsonProperty(JsonPathUtilities.ReferenceReplaceString, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        string IJsonReferenceBase.ReferencePath { get; set; }
+
+        /// <summary>Gets or sets the referenced object.</summary>
+        [JsonIgnore]
+        internal virtual OpenApiPathItem Reference
+        {
+            get => _reference;
+            set
+            {
+                if (_reference != value)
+                {
+                    _reference = value;
+                    ((IJsonReferenceBase)this).ReferencePath = null;
+                }
+            }
+        }
+
+        /// <summary>Gets or sets the referenced object.</summary>
+        [JsonIgnore]
+        IJsonReference IJsonReferenceBase.Reference
+        {
+            get => Reference;
+            set => Reference = (OpenApiPathItem)value;
+        }
+
+        [JsonIgnore]
+        IJsonReference IJsonReference.ActualObject => ActualPathItem;
+
+        [JsonIgnore]
+        object IJsonReference.PossibleRoot => Parent;
+
+        #endregion
 
         /// <summary>Gets or sets the extension data (i.e. additional properties which are not directly defined by the JSON object).</summary>
         [JsonExtensionData]
