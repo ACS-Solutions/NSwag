@@ -40,6 +40,8 @@ namespace NSwag.CodeGeneration.CSharp
 
             AdditionalNamespaceUsages = new string[0];
             AdditionalContractNamespaceUsages = new string[0];
+
+            this.ParameterNameGenerator = new Naming.NonCasingParameterNameGenerator();
         }
 
         /// <summary>Gets the CSharp generator settings.</summary>
