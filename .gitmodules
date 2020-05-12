@@ -1,0 +1,3 @@
+[submodule "NJsonSchema"]
+	path = NJsonSchema
+	url = https://github.com/ACS-Solutions/NJsonSchema.git

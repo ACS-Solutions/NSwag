@@ -96,18 +96,6 @@
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NJsonSchema, Version=10.1.11.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.10.1.11\lib\net45\NJsonSchema.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema.CodeGeneration, Version=10.1.11.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.CodeGeneration.10.1.11\lib\net451\NJsonSchema.CodeGeneration.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema.CodeGeneration.CSharp, Version=10.1.11.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.CodeGeneration.CSharp.10.1.11\lib\net451\NJsonSchema.CodeGeneration.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="NJsonSchema.CodeGeneration.TypeScript, Version=10.1.11.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.CodeGeneration.TypeScript.10.1.11\lib\net451\NJsonSchema.CodeGeneration.TypeScript.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -312,6 +300,22 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\NJsonSchema\src\NJsonSchema.CodeGeneration.CSharp\NJsonSchema.CodeGeneration.CSharp.csproj">
+      <Project>{64ce7318-c2a8-4d3b-b233-6bc58130ff5c}</Project>
+      <Name>NJsonSchema.CodeGeneration.CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NJsonSchema\src\NJsonSchema.CodeGeneration.TypeScript\NJsonSchema.CodeGeneration.TypeScript.csproj">
+      <Project>{d9f09ded-4240-4da7-9793-66f4cf391ad6}</Project>
+      <Name>NJsonSchema.CodeGeneration.TypeScript</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NJsonSchema\src\NJsonSchema.CodeGeneration\NJsonSchema.CodeGeneration.csproj">
+      <Project>{20b2bd70-59c3-4cc2-a7d8-abc38c924161}</Project>
+      <Name>NJsonSchema.CodeGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NJsonSchema\src\NJsonSchema\NJsonSchema.csproj">
+      <Project>{af98d35b-199d-4da2-bef8-bc71d05e8877}</Project>
+      <Name>NJsonSchema</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NSwag.AssemblyLoader\NSwag.AssemblyLoader.csproj">
       <Project>{46634C60-BA7D-43E6-9049-6AD461488C39}</Project>
       <Name>NSwag.AssemblyLoader</Name>
